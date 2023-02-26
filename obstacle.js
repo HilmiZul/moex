@@ -2,7 +2,7 @@ class Obstacle {
   constructor() {
     this.pos = createVector(
                 random(50, width), random(50, height/2))
-    this.r = 50
+    this.r = 60
   }
   
   reset() {
