@@ -32,10 +32,11 @@ function setup() {
 }
 
 function modelReady() {
-  select("#status").html("Model Loaded");
+  select("#status").html("<h1>MORNING EXERCISE</h1>");
 }
 
 function draw() {
+  background(0)
   translate(width,0);
   scale(-1,1); // flip video biar ga susah mainnya
   image(video, 0, 0, width, height);
@@ -65,10 +66,13 @@ function draw() {
     fill(213, 0, 143);
     leftWrist = pose.leftWrist;
     ellipse(leftWrist.x, leftWrist.y, rWrist);
+    // rect(width-50, leftWrist.y, 50, 100);
 
+    
     fill(255, 215, 0);
     rightWrist = pose.rightWrist;
     ellipse(rightWrist.x, rightWrist.y, rWrist);
+    // rect(0, rightWrist.y, 50, 100);
 
     for (let i = 0; i < nObs; i++) {
       i == 0 ? fill(213, 0, 143) : fill(255, 215, 0);
