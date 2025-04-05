@@ -1,2 +1,2 @@
 # MOEX
-Morning Exercise is a game made using ML poseNet using ml5.js.
+Morning Exercise is a cool game made by ml5.js using poseNet.
