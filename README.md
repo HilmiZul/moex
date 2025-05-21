@@ -11,7 +11,7 @@ Morning Exercise is a cool game made by ml5.js using handPose. I created this ga
 
 # How to play?
 
-Angkat kedua tangan, collide-kan keypoin masing-masing pergelangan tangan dengan obstacle. Pokoknya gerakkan tangan dan badanmu! 😂
+Angkat kedua tangan, collide-kan keypoin masing-masing pergelangan tangan dengan coin. Pokoknya gerakkan tangan dan badanmu! 😂
 
 # Changelog
 **5 April 2025**
