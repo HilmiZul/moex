@@ -13,12 +13,13 @@ let radiusWrist = 50
 let coins = [];
 let n_obs = 2;
 let skorKuning = 0;
-let skorMerah = 0;
+let soundDing;
 
 let timer = 120
 
 function preload() {
   handPose = ml5.handPose({ flipped: false });
+  soundDing = loadSound("assets/audio/ding.mp3");
 }
 
 function setup() {
@@ -77,14 +78,14 @@ function draw() {
   // end timer
 
   // score
-  push();
-  translate(width - 20, 0)
-  scale(-1, 1)
-  fill(213, 0, 143);
-  stroke(0);
-  textSize(50);
-  text(skorKuning, 10, 50);
-  pop();
+  // push();
+  // translate(width - 20, 0)
+  // scale(-1, 1)
+  // fill(213, 0, 143);
+  // stroke(0);
+  // textSize(50);
+  // text(skorKuning, 10, 50);
+  // pop();
 
   push();
   translate(width + 20, 0)
@@ -92,7 +93,7 @@ function draw() {
   fill(255, 215, 0);
   stroke(0);
   textSize(50);
-  text(skorMerah, width - 50, 50);
+  text(skorKuning, width - 50, 50);
   pop();
   // end score
 
@@ -100,15 +101,14 @@ function draw() {
   for (let i = 0; i < hands.length; i++) {
     let hand = hands[i];
     for (let j = 0; j < hand.keypoints.length; j++) {
+      fill(213, 0, 143);
       if(hand.handedness == "Left") {
         leftWrist = hand.keypoints[0];
-        fill(213, 0, 143);
         stroke(0);
         strokeWeight(5);
         circle(leftWrist.x, leftWrist.y, radiusWrist);
       } else if(hand.handedness == "Right") {
         rightWrist = hand.keypoints[0];
-        fill(255, 215, 0);
         stroke(0);
         strokeWeight(5)
         circle(rightWrist.x, rightWrist.y, radiusWrist);
@@ -120,18 +120,21 @@ function draw() {
   // cek collision masing-masing tangan dengan coins.
   if(hands.length > 0) {
     for (let i = 0; i < n_obs; i++) {
-      i == 0 ? fill(213, 0, 143) : fill(255, 215, 0);
+      // i == 0 ? fill(213, 0, 143) : fill(255, 215, 0);
+      fill(255, 215, 0);
       coins[i].show();
       if(rightWrist) {
         if (coins[i].collisionWrist(rightWrist.x, rightWrist.y, i)) {
           coins.splice(i, 1);
-          skorMerah++;
+          soundDing.play();
+          skorKuning++;
           coins.push(new Coin());
         }
       }
       if(leftWrist) {
         if (coins[i].collisionWrist(leftWrist.x, leftWrist.y, i)) {
           coins.splice(i, 1);
+          soundDing.play();
           skorKuning++;
           coins.push(new Coin());
         }
@@ -145,7 +148,6 @@ function keyPressed() {
   // reset saat gameplay
   if (key === 'r') {
     skorKuning = 0
-    skorMerah = 0
     coins[0].reset()
     coins[1].reset()
     playAgain()
