@@ -22,7 +22,7 @@ class Coin {
   collisionWrist(wristX, wristY, i) {
     let hit = collideCircleCircle(
       wristX, wristY, 20,
-      obstacles[i].pos.x, obstacles[i].pos.y, this.r
+      this.pos.x, this.pos.y, this.r
     )
     return hit
   }
