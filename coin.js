@@ -19,9 +19,9 @@ class Coin {
     ellipse(this.pos.x, this.pos.y, this.r)
   }
 
-  collisionWrist(wristX, wristY, i) {
+  collisionWrist(wristX, wristY, i, radiusWrist) {
     let hit = collideCircleCircle(
-      wristX, wristY, 20,
+      wristX, wristY, radiusWrist,
       this.pos.x, this.pos.y, this.r
     )
     return hit
