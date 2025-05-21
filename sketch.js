@@ -77,16 +77,6 @@ function draw() {
   pop()
   // end timer
 
-  // score
-  // push();
-  // translate(width - 20, 0)
-  // scale(-1, 1)
-  // fill(213, 0, 143);
-  // stroke(0);
-  // textSize(50);
-  // text(skorKuning, 10, 50);
-  // pop();
-
   push();
   translate(width + 20, 0)
   scale(-1, 1)
@@ -124,7 +114,7 @@ function draw() {
       fill(255, 215, 0);
       coins[i].show();
       if(rightWrist) {
-        if (coins[i].collisionWrist(rightWrist.x, rightWrist.y, i)) {
+        if (coins[i].collisionWrist(rightWrist.x, rightWrist.y, i, radiusWrist)) {
           coins.splice(i, 1);
           soundDing.play();
           skorKuning++;
@@ -132,7 +122,7 @@ function draw() {
         }
       }
       if(leftWrist) {
-        if (coins[i].collisionWrist(leftWrist.x, leftWrist.y, i)) {
+        if (coins[i].collisionWrist(leftWrist.x, leftWrist.y, i, radiusWrist)) {
           coins.splice(i, 1);
           soundDing.play();
           skorKuning++;
@@ -148,12 +138,14 @@ function keyPressed() {
   // reset saat gameplay
   if (key === 'r') {
     skorKuning = 0
-    coins[0].reset()
+    // coins[0].reset()
     coins[1].reset()
     playAgain()
   }
   if (key === 'p') {
     // play again saat game berakhir
+    skorKuning = 0
+    coins[1].reset()
     playAgain()
     loop()
   }
