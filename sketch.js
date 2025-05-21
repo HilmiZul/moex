@@ -10,7 +10,7 @@ let pose;
 let leftWrist;
 let rightWrist;
 let radiusWrist = 50
-let obstacles = [];
+let coins = [];
 let n_obs = 2;
 let skorKuning = 0;
 let skorMerah = 0;
@@ -25,7 +25,7 @@ function setup() {
   createCanvas(960, 720);
 
   for (let i = 0; i < n_obs; i++) {
-    obstacles.push(new Obstacle());
+    coins.push(new Coin());
   }
 
   video = createCapture(VIDEO, { flipped: false });
@@ -116,24 +116,24 @@ function draw() {
     }
   }
 
-  // draw obstacles saat tangan muncul.
-  // cek collision masing-masing tangan dengan obstacles.
+  // draw coins saat tangan muncul.
+  // cek collision masing-masing tangan dengan coins.
   if(hands.length > 0) {
     for (let i = 0; i < n_obs; i++) {
       i == 0 ? fill(213, 0, 143) : fill(255, 215, 0);
-      obstacles[i].show();
+      coins[i].show();
       if(rightWrist) {
-        if (obstacles[i].collisionWrist(rightWrist.x, rightWrist.y, i)) {
-          obstacles.splice(i, 1);
+        if (coins[i].collisionWrist(rightWrist.x, rightWrist.y, i)) {
+          coins.splice(i, 1);
           skorMerah++;
-          obstacles.push(new Obstacle());
+          coins.push(new Coin());
         }
       }
       if(leftWrist) {
-        if (obstacles[i].collisionWrist(leftWrist.x, leftWrist.y, i)) {
-          obstacles.splice(i, 1);
+        if (coins[i].collisionWrist(leftWrist.x, leftWrist.y, i)) {
+          coins.splice(i, 1);
           skorKuning++;
-          obstacles.push(new Obstacle());
+          coins.push(new Coin());
         }
       }
     }
@@ -146,8 +146,8 @@ function keyPressed() {
   if (key === 'r') {
     skorKuning = 0
     skorMerah = 0
-    obstacles[0].reset()
-    obstacles[1].reset()
+    coins[0].reset()
+    coins[1].reset()
     playAgain()
   }
   if (key === 'p') {
