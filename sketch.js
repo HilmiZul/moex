@@ -16,10 +16,14 @@ let skorKuning = 0;
 let soundDing;
 
 let timer = 120
+let obstacleImg;
+let obstacle;
+let gameOver = false
 
 function preload() {
   handPose = ml5.handPose({ flipped: false });
   soundDing = loadSound("assets/audio/ding.mp3");
+  obstacleImg = loadImage("assets/img/virus.jpg")
 }
 
 function setup() {
@@ -28,6 +32,7 @@ function setup() {
   for (let i = 0; i < n_obs; i++) {
     coins.push(new Coin());
   }
+  obstacle = new Obstacle()
 
   video = createCapture(VIDEO, { flipped: false });
   video.size(width, height);
@@ -46,10 +51,25 @@ function playAgain() {
 
 function draw() {
   background(0)
+
   translate(width, 0);
   scale(-1, 1); // flip video biar ga susah mainnya
   image(video, 0, 0, width, height);
   strokeWeight(2);
+
+  // game over while lengan kena virus
+  if(gameOver) {
+    noLoop()
+    push()
+    background(0, 0, 0, 200)
+    translate(width, 0)
+    scale(-1, 1)
+    textSize(60)
+    text("Yaah Kena Virus 😭", width / 2 - 270, height / 2)
+    textSize(50)
+    text("Tekan 'p' untuk Bermain lagi", width / 2 - 290, height / 2 + 100)
+    pop()
+  }
 
   // timer
   if (frameCount % 60 == 0 && timer > 0) {
@@ -109,11 +129,20 @@ function draw() {
   // draw coins saat tangan muncul.
   // cek collision masing-masing tangan dengan coins.
   if(hands.length > 0) {
+    // tampilkan obstacle saat tangan muncul ke layar
+    obstacle.update()
+    obstacle.show()
+    obstacle.checkEdge()
+
     for (let i = 0; i < n_obs; i++) {
       // i == 0 ? fill(213, 0, 143) : fill(255, 215, 0);
       fill(255, 215, 0);
       coins[i].show();
       if(rightWrist) {
+        if(obstacle.collision(rightWrist.x, rightWrist.y, radiusWrist)) {
+          console.log('RIGHT HAND HIT VIRUS!!!')
+          gameOver = true
+        }
         if (coins[i].collisionWrist(rightWrist.x, rightWrist.y, i, radiusWrist)) {
           coins.splice(i, 1);
           soundDing.play();
@@ -122,6 +151,10 @@ function draw() {
         }
       }
       if(leftWrist) {
+        if(obstacle.collision(leftWrist.x, leftWrist.y, radiusWrist)) {
+          console.log('ELFT HAND HIT VIRUS!!!')
+          gameOver = true
+        }
         if (coins[i].collisionWrist(leftWrist.x, leftWrist.y, i, radiusWrist)) {
           coins.splice(i, 1);
           soundDing.play();
@@ -137,6 +170,7 @@ function draw() {
 function keyPressed() {
   // reset saat gameplay
   if (key === 'r') {
+    gameOver = false
     skorKuning = 0
     // coins[0].reset()
     coins[1].reset()
@@ -144,6 +178,7 @@ function keyPressed() {
   }
   if (key === 'p') {
     // play again saat game berakhir
+    gameOver = false
     skorKuning = 0
     coins[1].reset()
     playAgain()
