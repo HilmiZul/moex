@@ -15,14 +15,15 @@ class Coin {
   }
 
   show() {
-    noStroke()
-    ellipse(this.pos.x, this.pos.y, this.r)
+    // noStroke()
+    // ellipse(this.pos.x, this.pos.y, this.r)
+    image(coinImg, this.pos.x, this.pos.y)
   }
 
   collisionWrist(wristX, wristY, i, radiusWrist) {
     let hit = collideCircleCircle(
       wristX, wristY, radiusWrist,
-      this.pos.x, this.pos.y, this.r
+      this.pos.x, this.pos.y, coinImg.width
     )
     return hit
   }
