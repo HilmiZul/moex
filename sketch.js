@@ -1,5 +1,6 @@
 // Created at: 16 December 2022, Bandara Kertajati, Majalengka
 // Updated at: 5 April 2025
+// Last update at: 14 Mei 2026
 // Created by: Zul Hilmi
 // Repo: hilmizul/moex
 
@@ -24,6 +25,7 @@ function preload() {
   handPose = ml5.handPose({ flipped: false });
   soundDing = loadSound("assets/audio/ding.mp3");
   obstacleImg = loadImage("assets/img/virus.jpg")
+  coinImg = loadImage("assets/img/coin.jpg")
 }
 
 function setup() {
@@ -65,9 +67,11 @@ function draw() {
     translate(width, 0)
     scale(-1, 1)
     textSize(60)
-    text("Yaah Kena Virus 😭", width / 2 - 270, height / 2)
+    textAlign(CENTER, CENTER)
+    text("Yaah Kena Virus 😭", width / 2, height / 2)
     textSize(50)
-    text("Tekan 'p' untuk Bermain lagi", width / 2 - 290, height / 2 + 100)
+    textAlign(CENTER, BOTTOM)
+    text("Tekan 'p' untuk Bermain lagi", width / 2, height - 100)
     pop()
   }
 
@@ -103,7 +107,7 @@ function draw() {
   fill(255, 215, 0);
   stroke(0);
   textSize(50);
-  text(skorKuning, width - 50, 50);
+  text(skorKuning, width - 100, 50);
   pop();
   // end score
 
