@@ -147,7 +147,7 @@ function draw() {
           console.log('RIGHT HAND HIT VIRUS!!!')
           gameOver = true
         }
-        if (coins[i].collisionWrist(rightWrist.x, rightWrist.y, i, radiusWrist)) {
+        if (coins[i].collisionWrist(rightWrist.x, rightWrist.y, radiusWrist)) {
           coins.splice(i, 1);
           soundDing.play();
           skorKuning++;

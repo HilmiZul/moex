@@ -20,7 +20,7 @@ class Coin {
     image(coinImg, this.pos.x, this.pos.y)
   }
 
-  collisionWrist(wristX, wristY, i, radiusWrist) {
+  collisionWrist(wristX, wristY, radiusWrist) {
     let hit = collideCircleCircle(
       wristX, wristY, radiusWrist,
       this.pos.x, this.pos.y, coinImg.width
