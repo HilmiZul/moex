@@ -9,8 +9,8 @@ class Coin {
 
   reset() {
     this.pos = createVector(
-      random(50, width),
-      random(50, height / 2)
+      random(coinImg.width, width),
+      random(coinImg.width, height / 2)
     )
   }
 
