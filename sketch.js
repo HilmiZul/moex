@@ -16,7 +16,7 @@ let n_obs = 2;
 let skorKuning = 0;
 let soundDing;
 
-let timer = 120
+let timer = 60
 let obstacleImg;
 let obstacle;
 let gameOver = false
@@ -48,7 +48,9 @@ function modelReady(results) {
 }
 
 function playAgain() {
-  timer = 120
+  gameOver = false
+  skorKuning = 0
+  timer = 60
 }
 
 function draw() {
@@ -142,6 +144,7 @@ function draw() {
       // i == 0 ? fill(213, 0, 143) : fill(255, 215, 0);
       fill(255, 215, 0);
       coins[i].show();
+
       if(rightWrist) {
         if(obstacle.collision(rightWrist.x, rightWrist.y, radiusWrist)) {
           console.log('RIGHT HAND HIT VIRUS!!!')
@@ -154,11 +157,13 @@ function draw() {
           coins.push(new Coin());
         }
       }
+
       if(leftWrist) {
         if(obstacle.collision(leftWrist.x, leftWrist.y, radiusWrist)) {
           console.log('ELFT HAND HIT VIRUS!!!')
           gameOver = true
         }
+
         if (coins[i].collisionWrist(leftWrist.x, leftWrist.y, i, radiusWrist)) {
           coins.splice(i, 1);
           soundDing.play();
@@ -174,17 +179,14 @@ function draw() {
 function keyPressed() {
   // reset saat gameplay
   if (key === 'r') {
-    gameOver = false
-    skorKuning = 0
     // coins[0].reset()
     coins[1].reset()
+    obstacle.reset()
     playAgain()
   }
   if (key === 'p') {
-    // play again saat game berakhir
-    gameOver = false
-    skorKuning = 0
     coins[1].reset()
+    obstacle.reset()
     playAgain()
     loop()
   }
