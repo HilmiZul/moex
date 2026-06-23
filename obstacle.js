@@ -5,6 +5,12 @@ class Obstacle {
     this.speedY = random(4,6)
   }
 
+  reset() {
+    this.pos = createVector(0, 0)
+    this.speedX = random(3, 5)
+    this.speedY = random(4, 6)
+  }
+
   show() {
     image(obstacleImg, this.pos.x, this.pos.y)
   }
