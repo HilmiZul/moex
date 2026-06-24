@@ -1,4 +1,4 @@
-// Created at: 16 December 2022, Bandara Kertajati, Majalengka
+// Created at: 16 December 2022, Bandara Kertajati, Majalengka (Kertajati Airport, Majalengka)
 // Updated at: 5 April 2025
 // Last update at: 14 Mei 2026
 // Created by: Zul Hilmi
@@ -13,10 +13,11 @@ let rightWrist;
 let radiusWrist = 50
 let coins = [];
 let n_obs = 2;
-let skorKuning = 0;
+let yellowScore = 0;
 let soundDing;
 
-let timer = 60
+const TIMELEFT = 60
+let timer = TIMELEFT
 let obstacleImg;
 let obstacle;
 let gameOver = false
@@ -44,13 +45,13 @@ function setup() {
 
 function modelReady(results) {
   hands = results;
-  select("#status").html("<h2>🕺🏻 MORNING EXERCISE 💃🏻</h2>");
+  select("#status").html("");
 }
 
 function playAgain() {
   gameOver = false
-  skorKuning = 0
-  timer = 60
+  yellowScore = 0
+  timer = TIMELEFT
 }
 
 function draw() {
@@ -60,58 +61,6 @@ function draw() {
   scale(-1, 1); // flip video biar ga susah mainnya
   image(video, 0, 0, width, height);
   strokeWeight(2);
-
-  // game over while lengan kena virus
-  if(gameOver) {
-    noLoop()
-    push()
-    background(0, 0, 0, 200)
-    translate(width, 0)
-    scale(-1, 1)
-    textSize(60)
-    textAlign(CENTER, CENTER)
-    text("Yaah Kena Virus 😭", width / 2, height / 2)
-    textSize(50)
-    textAlign(CENTER, BOTTOM)
-    text("Tekan 'p' untuk Bermain lagi", width / 2, height - 100)
-    pop()
-  }
-
-  // timer
-  if (frameCount % 60 == 0 && timer > 0) {
-    timer--
-  }
-  if (timer == 0) {
-    push()
-    background(0, 0, 0, 200)
-    translate(width, 0)
-    scale(-1, 1)
-    textSize(60)
-    text("Yaah Waktunya Habis", width / 2 - 270, height / 2)
-    textSize(50)
-    text("Tekan 'p' untuk Bermain lagi", width / 2 - 290, height / 2 + 100)
-    pop()
-    noLoop()
-  }
-  push()
-  translate(width, 0)
-  scale(-1, 1)
-  fill(100, 100, 200)
-  stroke(0)
-  textSize(50)
-  text(timer, width / 2, 50)
-  pop()
-  // end timer
-
-  push();
-  translate(width + 20, 0)
-  scale(-1, 1)
-  fill(255, 215, 0);
-  stroke(0);
-  textSize(50);
-  text(skorKuning, width - 100, 50);
-  pop();
-  // end score
 
   // deteksi titik pergelangan tangan dari handPose
   for (let i = 0; i < hands.length; i++) {
@@ -147,32 +96,96 @@ function draw() {
 
       if(rightWrist) {
         if(obstacle.collision(rightWrist.x, rightWrist.y, radiusWrist)) {
-          console.log('RIGHT HAND HIT VIRUS!!!')
           gameOver = true
         }
         if (coins[i].collisionWrist(rightWrist.x, rightWrist.y, radiusWrist)) {
           coins.splice(i, 1);
           soundDing.play();
-          skorKuning++;
+          yellowScore++;
           coins.push(new Coin());
         }
       }
 
       if(leftWrist) {
         if(obstacle.collision(leftWrist.x, leftWrist.y, radiusWrist)) {
-          console.log('ELFT HAND HIT VIRUS!!!')
           gameOver = true
         }
 
         if (coins[i].collisionWrist(leftWrist.x, leftWrist.y, i, radiusWrist)) {
           coins.splice(i, 1);
           soundDing.play();
-          skorKuning++;
+          yellowScore++;
           coins.push(new Coin());
         }
       }
     }
   }
+
+  else {
+    push()
+    translate(width, 0)
+    scale(-1, 1)
+    background(0, 0, 0, 200);
+    fill(255, 255, 255);
+    textSize(60);
+    textAlign(CENTER, CENTER);
+    text("Put both hands up!", width / 2, height / 2);
+    pop()
+  }
+
+  // game over while you've caught a virus
+  if(gameOver) {
+    noLoop()
+    push()
+    background(0, 0, 0, 200)
+    translate(width, 0)
+    scale(-1, 1)
+    fill(255, 255, 255);
+    textSize(60)
+    textAlign(CENTER, CENTER)
+    text("Aw, you've caught a virus 😭", width / 2, height / 2)
+    textSize(50)
+    textAlign(CENTER, BOTTOM)
+    text("Press 'P' to play again!", width / 2, height / 2 + 100)
+    pop()
+  }
+
+  // timer
+  if (frameCount % 60 == 0 && timer > 0) {
+    timer--
+  }
+  if (timer == 0) {
+    push()
+    background(0, 0, 0, 200)
+    translate(width, 0)
+    scale(-1, 1)
+    textSize(40)
+    textAlign(CENTER, CENTER)
+    text(`You Survived! You got ${yellowScore} coins 👏🏻😮‍💨`, width / 2, height / 2)
+    textSize(40)
+    text("Press 'P' to play again!", width / 2, height / 2 + 100)
+    pop()
+    noLoop()
+  }
+  push()
+  translate(width, 0)
+  scale(-1, 1)
+  fill(100, 100, 200)
+  stroke(0)
+  textSize(50)
+  text(timer, width / 2, 50)
+  pop()
+  // end timer
+
+  push();
+  translate(width + 20, 0)
+  scale(-1, 1)
+  fill(255, 215, 0);
+  stroke(0);
+  textSize(50);
+  text(yellowScore, width - 100, 50);
+  pop();
+  // end score
 }
 
 
