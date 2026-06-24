@@ -1,3 +1,8 @@
+## v1.4 (25 Juni 2026)
+
+- Center the canvas game play
+- Improvement UI/X
+
 ## v1.3 (23 Juni 2026)
 
 - Change game duration
